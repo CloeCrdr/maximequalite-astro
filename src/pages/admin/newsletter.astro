@@ -1,0 +1,38 @@
+---
+import Meta from '../../components/Meta.astro';
+import fs from "fs";
+import path from "path";
+
+const filePath = path.resolve("src/data/subscribers.json");
+let subscribers = [];
+
+if (fs.existsSync(filePath)) {
+  subscribers = JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+---
+<Meta/>
+<h1>Gestion des abonnés</h1>
+<p>Nombre d'abonnés : {subscribers.length}</p>
+
+<a href="/api/download-subscribers" download>
+  <button>Télécharger la liste</button>
+</a>
+
+<ul>
+  {subscribers.map((email, index) => (
+    <li key={index}>{email}</li>
+  ))}
+</ul>
+
+<style>
+  h1 { text-align: center; }
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+</style>

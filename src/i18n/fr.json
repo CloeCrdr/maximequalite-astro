@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "home": {
+      "title": "Maxime Qualité Travaux BTP",
+      "description": "Bienvenue sur notre site officiel."
+    },
+    "about": {
+      "title": "À propos",
+      "description": "Découvrez notre histoire et nos valeurs."
+    },
+    "contact": {
+      "title": "Nous contacter",
+      "description": "Nous contacter."
+    }
+  },
+  "navigation": {
+    "homepage": "Accueil",
+    "aboutus": "À propos de nous",
+    "about": "À propos",
+    "socials": "Réseaux sociaux",
+    "contact": "Contact"
+  },
+  "hero": {
+    "slogan": "Travaux BTP",
+    "cta": "Demander un devis"
+  },
+  "about": {
+    "title": "À propos de nous",
+    "shortDescription": "Nous sommes une entreprise spécialisée dans...",
+    "readMore": "En savoir plus",
+    "fullDescription": "Texte détaillé sur l'histoire et les valeurs de l'entreprise..."
+  },
+  "home": {
+    "welcome": "bienvenue"
+  },
+  "entreprise": {
+    "title": "Maxime Qualité",
+    "description": "Transformez votre espace avec précision et soin avec MAXIME QUALITÉ ! Nous sommes votre partenaire de confiance en rénovation, offrant des services de qualité supérieure pour la protection et l’amélioration de votre maison. Avec une équipe de professionnels dévoués, nous garantissons des résultats exceptionnels et la satisfaction de nos clients. Choisissez MAXIME QUALITÉ pour une rénovation réussie !"
+  },
+  "services": {
+    "title": "Nos services",
+    "list": [
+      {
+        "icon": "🏠",
+        "name": "Rénovation"
+      },
+      {
+        "icon": "🛠️",
+        "name": "Maçonnerie"
+      },
+      {
+        "icon": "🎨",
+        "name": "Peinture"
+      },
+      {
+        "icon": "🌳",
+        "name": "Parquet"
+      },
+      {
+        "icon": "🛁",
+        "name": "Salle de bain"
+      },
+      {
+        "icon": "⚡",
+        "name": "Électricité"
+      },
+      {
+        "icon": "🔧",
+        "name": "Plomberie"
+      }
+    ]
+  },
+  "partenaires": {
+    "title": "Nos partenaires"
+  },
+  "review": {
+    "title": "Nos avis clients",
+    "see_more": "Voir plus",
+    "see_less": "Voir moins"
+  },
+  "newsletter": {
+    "titre": "Newsletter",
+    "description": "Tu veux rester au courant de toutes les nouveautés de Maxime Qualité ? Alors inscris-toi à notre newsletter ou rejoins nos réseaux {facebook}, {tiktok} et {instagram} !",
+    "facebook": "<a href='https://www.facebook.com/profile.php?id=100089175712114' target='_blank'>Facebook</a>",
+    "tiktok": "<a href='https://www.tiktok.com/@maxime.qualit' target='_blank'>TikTok</a>",
+    "instagram": "<a href='https://www.instagram.com/maximequalite/' target='_blank'>Instagram</a>",
+    "placeholder": "Ton adresse mail",
+    "submit": "S’inscrire à la newsletter"
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "Email",
+    "phone": "Téléphone",
+    "form": {
+      "title": "Formulaire de contact",
+      "placeholder": {
+        "name": "Votre nom",
+        "email": "Votre email",
+        "message": "Écrivez votre message"
+      },
+      "subject": {
+        "label": "-- Choisir un objet --",
+        "quote": "Demander un devis",
+        "appointment": "Prendre rendez-vous",
+        "other": "Autre"
+      },
+      "submit": "Envoyer"
+    }
+  },
+  "aboutus": {
+    "title": "À propos de nous",
+    "description": "Maxime Qualité est une entreprise spécialisée dans le BTP et la rénovation, située à Garches. Nous garantissons un travail de haute qualité et des services adaptés à vos besoins.",
+    "location": "📍 <strong>{address}</strong>",
+    "pro_card_title": "🪪 Carte professionnelle",
+    "infos": {
+      "siret": "📜 SIRET : 915 407 324 00010",
+      "insurance": "🏗️ Assurance décennale incluse",
+      "approval": "✅ Agréé par le Ministère du BTP"
+    },
+    "get_direction": "Obtenir un itinéraire"
+  },
+  "modal": {
+    "success": "✅ Votre message a bien été envoyé !",
+    "error": "❌ Une erreur est survenue. Merci de réessayer.",
+    "technical": "❌ Une erreur technique est survenue."
+  }  
+}

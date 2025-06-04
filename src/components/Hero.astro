@@ -1,0 +1,67 @@
+---
+const { lang, translations } = Astro.props;
+---
+
+<div class="hero" id="hero">
+  <div class="overlay">
+    <div class="presentation"><h1>{translations.entreprise.title}</h1>
+    <p>{translations.hero.slogan}</p></div>
+    <a class="cta-button" id="scrollButton" href={`/contact?lang=${lang}`}>{translations.hero.cta}</a>
+  </div>
+</div>
+
+<style>
+  .hero {
+    background-image: url('../assets/hero.webp');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 93vh;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .overlay {
+    position: absolute;
+    top: 40%; 
+    left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .presentation {
+    color: #ecececbd;
+  }
+  .cta-button {
+    padding: 20px 35px;
+    background-color: #ad7c00;
+    color: white;
+    outline : 3px solid rgba(255,255,255,0.3);
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    margin-top:1.3rem;
+    transition: all ease-in 300ms;
+    text-decoration: none !important;
+    display: inline-block !important; 
+    text-align: center;
+  }
+  .cta-button:hover {
+    background-color: rgba(0,0,0,0.3);
+    outline: 3px solid #d49e16;
+    color: #d49e16;
+
+  }
+</style>

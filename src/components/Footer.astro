@@ -1,0 +1,82 @@
+---
+const { lang, translations } = Astro.props;
+---
+<footer class="footer-section">
+    <div class="container">
+      <div class="footer-left">
+        <h3>Maxime Qualité</h3>
+        <p>1 Allée des Genêts<br>92380 Garches</p>
+        <p><a href="mailto:qualitemaxime@gmail.com">qualitemaxime&#64;gmail.com</a></p>
+      </div>
+      <div class="footer-center">
+        <p>{translations.hero.slogan}</p>
+      </div>
+      <div class="footer-right">
+        <ul>
+          <li><a href="/about">{translations.navigation.about}</a></li>
+          <li><a href="/contact">{translations.navigation.contact}</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  
+  <style>
+    .footer-section {
+      background-color: #e5e5e5;
+      padding: 50px 0;
+    }
+  
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+  
+    .footer-left h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  
+    .footer-left p {
+      font-size: 1rem;
+      margin: 5px 0;
+    }
+  
+    .footer-left a {
+      color: #000;
+      text-decoration: none;
+    }
+  
+    .footer-left a:hover {
+      text-decoration: underline;
+    }
+  
+    .footer-center p {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+    }
+  
+    .footer-right ul {
+      list-style: none;
+      padding: 0;
+    }
+  
+    .footer-right ul li {
+      margin: 5px 0;
+    }
+  
+    .footer-right ul li a {
+      text-decoration: none;
+      color: #000;
+      font-size: 1rem;
+    }
+  
+    .footer-right ul li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  

@@ -1,0 +1,244 @@
+---
+const { lang, translations } = Astro.props;
+const scriptURL =
+  "https://script.google.com/macros/s/AKfycbwPhrBIIcSj4jA4jqaHFm5alKIzUzu9ISJYw0RU9MBBoS_egtaXAA02M4DbOCSrhCkU/exec"; // Remplace par ton lien
+---
+
+<section class="newsletter-section">
+  <h2>{translations.newsletter.titre}</h2>
+  <div class="container">
+    <p set:html={
+      translations.newsletter.description
+        .replace('{facebook}', translations.newsletter.facebook)
+        .replace('{tiktok}', translations.newsletter.tiktok)
+        .replace('{instagram}', translations.newsletter.instagram)
+    }></p>
+    
+
+    <form class="newsletter-form" id="newsletter-form">
+      <input
+        type="email"
+        name="email"
+        placeholder={translations.newsletter.placeholder}
+        required
+      />
+      <button type="submit" id="submit-button">
+        <span class="btn-text">{translations.newsletter.submit}</span>
+        <span class="loader hidden" aria-hidden="true"></span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Infobulle / modale -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="modal-close" class="close">&times;</span>
+      <p id="modal-message"></p>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+const form = document.querySelector("#newsletter-form");
+const modal = document.querySelector("#modal");
+const modalMessage = document.querySelector("#modal-message");
+const modalClose = document.querySelector("#modal-close");
+
+const submitButton = document.querySelector("#submit-button");
+const btnText = submitButton.querySelector(".btn-text");
+const loader = submitButton.querySelector(".loader");
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbwPhrBIIcSj4jA4jqaHFm5alKIzUzu9ISJYw0RU9MBBoS_egtaXAA02M4DbOCSrhCkU/exec";
+
+function toggleLoading(isLoading) {
+  if (isLoading) {
+    loader.classList.remove("hidden");
+    btnText.classList.add("hidden");
+    submitButton.disabled = true;
+  } else {
+    loader.classList.add("hidden");
+    btnText.classList.remove("hidden");
+    submitButton.disabled = false;
+  }
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  toggleLoading(true);
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(scriptURL, {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    console.log("Réponse reçue :", result); // pour debug
+
+    showModal(result.message);
+
+    if (result.success) {
+      form.reset();
+    }
+  } catch (err) {
+    console.error("Erreur :", err);
+    showModal("Une erreur est survenue.");
+  } finally {
+    toggleLoading(false);
+  }
+});
+
+
+function showModal(text) {
+  modalMessage.textContent = text;
+  modal.classList.remove("hidden");
+  setTimeout(() => modal.classList.add("hidden"), 4000);
+}
+
+modalClose.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+</script>
+
+<style>
+  .newsletter-section {
+    background-color: #f3f3f3;
+    padding: 50px 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #e5e5e5;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: none;
+    font-size: 1rem;
+  }
+
+  .newsletter-form button {
+    background-color: #a07a29;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    position: relative;
+  }
+
+  .newsletter-form button:hover {
+    background-color: #8d6a20;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal.hidden {
+    display: none;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .modal-content p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .close {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .btn-text {
+  transition: opacity 0.3s ease;
+}
+  .loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #a07a29;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+</style>

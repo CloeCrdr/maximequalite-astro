@@ -1,0 +1,193 @@
+---
+import Meta from "../components/Meta.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+
+import "../styles/global.css";
+
+import fr from "../i18n/fr.json";
+import en from "../i18n/en.json";
+import md from "../i18n/md.json";
+
+// Liste des langues disponibles
+const availableLangs = { fr, en, md };
+
+// Déterminer la langue depuis l'URL **avant le rendu**
+const urlLang = Astro.url.searchParams.get("lang") || null;
+let storedLang = null;
+
+// On récupère la langue stockée en client, mais Astro étant SSR, il faut s'assurer que ça ne plante pas
+if (typeof window !== "undefined") {
+  storedLang = localStorage.getItem("lang") || null;
+}
+
+// Choix final de la langue (URL > LocalStorage > FR par défaut)
+let lang = urlLang || storedLang || "fr";
+
+// Vérifier si la langue existe, sinon utiliser 'fr'
+if (!availableLangs[lang]) {
+  lang = "fr";
+}
+
+// Définir la traduction correcte
+const translations = availableLangs[lang];
+
+const API_KEY = import.meta.env.GOOGLE_MAPS_API_KEY;
+const COMPANY_LAT = 48.840923; // Remplace par la latitude de l'entreprise
+const COMPANY_LNG = 2.172104; // Remplace par la longitude
+const COMPANY_ADDRESS = "1 Allée des Genêts, 92380 Garches"; // Adresse exacte
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <Meta title={translations.meta.about.title} 
+        description={translations.meta.contact.description} 
+        lang={lang} />
+  <body>
+<Navigation lang={lang} translations={translations} />
+
+<section class="about-section">
+  <div class="container">
+    <div class="right">
+      <h2>{translations.aboutus.title}</h2>
+      <p class="description">
+        {translations.aboutus.description}
+      </p>
+
+      <p innerHTML={translations.aboutus.location.replace('{address}', COMPANY_ADDRESS)}></p>
+      <h3>{translations.aboutus.pro_card_title}</h3>
+      <ul>
+        <li>{translations.aboutus.infos.siret}</li>
+        <li>{translations.aboutus.infos.insurance}</li>
+        <li>{translations.aboutus.infos.approval}</li>
+      </ul>
+    </div>
+    <div class="left">
+      <div id="map" data-api-key={import.meta.env.GOOGLE_MAPS_API_KEY}></div>
+
+      <a
+        href={`https://www.google.com/maps/dir/?api=1&destination=${COMPANY_LAT},${COMPANY_LNG}`}
+        target="_blank"
+        class="btn"
+      >
+        {translations.aboutus.get_direction}
+      </a>
+    </div>
+  </div>
+</section>
+
+<Footer lang={lang} translations={translations} />
+
+<style>
+  .about-section {
+    background-color: #f3f3f3;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    padding: 50px 0;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  div.right {
+    width: 45%;
+    text-align: left;
+  }
+  .left { }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    text-align: left !important;
+  }
+
+  #map {
+    width: 500px;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #ad7c00;
+    color: white;
+    outline : 3px solid rgba(255,255,255,0.3);
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    text-decoration: none;
+    transition: all ease-in 300ms;
+  }
+
+  .btn:hover {
+    background-color: #d49e16;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1rem;
+  }
+
+  ul li {
+    margin-bottom: 5px;
+  }
+
+  p.description {
+    font-size: .9rem !important;
+  }
+
+  p strong {
+    font-size: 1rem;
+  }
+</style>
+
+<script client:load>
+const COMPANY_LAT = 48.840923;
+const COMPANY_LNG = 2.172104;
+
+const mapDiv = document.getElementById("map");
+const API_KEY = mapDiv.dataset.apiKey;
+
+function initMap() {
+  const location = { lat: COMPANY_LAT, lng: COMPANY_LNG };
+
+  const map = new google.maps.Map(mapDiv, {
+    zoom: 14,
+    center: location,
+  });
+
+  new google.maps.Marker({
+    position: location,
+    map: map,
+    title: "Maxime Qualité",
+  });
+}
+
+window.initMap = initMap;
+
+const script = document.createElement("script");
+script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
+script.async = true;
+script.defer = true;
+document.head.appendChild(script);
+</script>
+</body>
+</html>

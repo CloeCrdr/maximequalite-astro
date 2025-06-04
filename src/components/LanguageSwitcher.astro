@@ -1,0 +1,143 @@
+---
+const { lang } = Astro.props;
+
+const languages = [
+  { code: 'fr', label: 'FR', flag: '/icons/fr.svg' },
+  { code: 'en', label: 'EN', flag: '/icons/en.svg' },
+  { code: 'md', label: 'MD', flag: '/icons/md.svg' }
+];
+---
+
+<div class="language-switcher">
+  <button id="lang-btn" class="lang-btn">
+    <img id="lang-flag" src={languages.find(l => l.code === lang)?.flag || '/icons/fr.svg'} alt={lang.toUpperCase()} />
+    <span id="lang-label">{languages.find(l => l.code === lang)?.label || 'FR'}</span> <span>▼</span>
+  </button>
+  <div id="dropdown" class="dropdown">
+    {languages.map(({ code, label, flag }) => (
+      <button data-lang={code} class="lang-option">
+        <img src={flag} alt={label} />
+        {label}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script client:load>
+  document.addEventListener("DOMContentLoaded", () => {
+    const langBtn = document.getElementById("lang-btn");
+    const dropdown = document.getElementById("dropdown");
+    const langFlag = document.getElementById("lang-flag");
+    const langLabel = document.getElementById("lang-label");
+
+    function changeLanguage(newLang) {
+      localStorage.setItem("lang", newLang);
+
+      // Mettre à jour l'URL et recharger la page
+      const url = new URL(window.location);
+      url.searchParams.set("lang", newLang);
+      window.location.href = url; // Recharge la page avec la nouvelle langue
+    }
+
+    function updateLanguageDisplay(langCode) {
+      const selectedLang = {
+        fr: { flag: "/icons/fr.svg", label: "FR" },
+        en: { flag: "/icons/en.svg", label: "EN" },
+        md: { flag: "/icons/md.svg", label: "MD" }
+      }[langCode] || { flag: "/icons/fr.svg", label: "FR" };
+
+      langFlag.src = selectedLang.flag;
+      langLabel.textContent = selectedLang.label;
+    }
+
+    // Récupérer la langue depuis l'URL ou LocalStorage
+    const urlLang = new URL(window.location).searchParams.get("lang");
+    const storedLang = localStorage.getItem("lang") || urlLang || "fr";
+
+    updateLanguageDisplay(storedLang);
+
+    document.querySelectorAll(".lang-option").forEach(button => {
+      button.addEventListener("click", () => {
+        const lang = button.dataset.lang;
+        if (lang) {
+          changeLanguage(lang);
+        }
+      });
+    });
+
+    langBtn.addEventListener("click", () => {
+      dropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".language-switcher")) {
+        dropdown.classList.remove("show");
+      }
+    });
+  });
+</script>
+
+<style>
+  .language-switcher {
+    position: relative;
+  }
+
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    width: 100px;
+    justify-content: space-around;
+  }
+
+  .lang-btn img {
+    width: 20px;
+    margin-right: 5px;
+  }
+
+  .lang-label {
+    margin-right: 10px;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    background: #333;
+    border-radius: 5px;
+    top: 100%;
+    right: 1px;
+    min-width: 120px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown.show {
+    display: block;
+  }
+
+  .dropdown button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .dropdown button img {
+    width: 20px;
+    margin-right: 5px;
+  }
+
+  .dropdown button:hover {
+    background: #444;
+    border-radius: 5px;
+  }
+</style>

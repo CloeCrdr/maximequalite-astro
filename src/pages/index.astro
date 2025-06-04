@@ -1,0 +1,170 @@
+---
+import Meta from '../components/Meta.astro';
+import Hero from '../components/Hero.astro';
+import Navigation from '../components/Navigation.astro';
+import Entreprise from '../components/Entreprise.astro';
+import Services from '../components/Services.astro';
+import Partenaires from '../components/Partenaires.astro';
+import AvisClients from '../components/AvisClients.astro';
+import Newsletter from '../components/Newsletter.astro';
+import Footer from '../components/Footer.astro';
+import Section from '../components/Section.astro'
+
+// Importation statique des traductions
+import fr from '../i18n/fr.json';
+import en from '../i18n/en.json';
+import md from '../i18n/md.json';
+
+import '../styles/global.css';
+
+// 🔹 Définition des langues disponibles
+const availableLangs = { fr, en, md };
+
+// 🔹 Récupération de la langue depuis l'URL **avant le rendu serveur**
+const urlLang = Astro.url.searchParams.get('lang') || null;
+
+// 🔹 Choix par défaut côté serveur (sans `localStorage`, qui n'est pas dispo côté SSR)
+let lang = urlLang || 'fr';
+
+// 🔹 Vérifier si la langue existe, sinon utiliser 'fr'
+if (!availableLangs[lang]) {
+  lang = 'fr';
+}
+
+// 🔹 Définir les traductions correctes pour la langue choisie
+const translations = availableLangs[lang];
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <Meta title={translations.meta.home.title} 
+        description={translations.meta.home.description} 
+        lang={lang} />
+  <body>
+    <Navigation lang={lang} translations={translations} />
+    <Hero lang={lang} translations={translations} />
+    <main id="index">
+        <Section id="entreprise">
+          <Entreprise lang={lang} translations={translations} />
+        </Section>
+      
+        <Section id="services">
+          <Services lang={lang} translations={translations} />
+        </Section>
+      
+        <Section id="partenaires">
+          <Partenaires lang={lang} translations={translations} />
+        </Section>
+      
+        <Section id="avis-clients">
+          <AvisClients lang={lang} translations={translations} />
+        </Section>
+      
+        <Section id="newsletter">
+          <Newsletter lang={lang} translations={translations} />
+        </Section>
+    </main>
+    <Footer lang={lang} translations={translations} />
+  </body>
+</html>
+<script client:load>
+  document.addEventListener("DOMContentLoaded", () => {
+    // ───────────── Langue ─────────────
+    const storedLang = localStorage.getItem("lang");
+    const currentUrl = new URL(window.location);
+    const currentLang = currentUrl.searchParams.get("lang") || storedLang || "fr";
+
+    if (!currentUrl.searchParams.get("lang")) {
+      currentUrl.searchParams.set("lang", currentLang);
+      window.history.replaceState({}, "", currentUrl);
+    }
+
+    localStorage.setItem("lang", currentLang);
+
+    document.querySelectorAll("a").forEach(link => {
+      const url = new URL(link.href, window.location.origin);
+      url.searchParams.set("lang", currentLang);
+      link.href = url.toString();
+    });
+
+    window.addEventListener("languageChange", (event) => {
+      const newLang = event.detail.lang;
+      localStorage.setItem("lang", newLang);
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set("lang", newLang);
+      window.history.replaceState({}, "", newUrl);
+
+      document.querySelectorAll("a").forEach(link => {
+        const url = new URL(link.href, window.location.origin);
+        url.searchParams.set("lang", newLang);
+        link.href = url.toString();
+      });
+
+      fetch(`/locales/${newLang}.json`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("title").textContent = data.navigation.aboutus;
+          document.getElementById("description").textContent = data.navigation.socials;
+        });
+    });
+
+    // ───────────── Animation des sections ─────────────
+    setTimeout(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            entry.target.style.transitionDelay = `${index * 0.2}s`;
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+      });
+
+      document.querySelectorAll(".section-to-reveal").forEach(section => {
+        observer.observe(section);
+      });
+    }, 100); // ⏱ Attendre un peu que le DOM se stabilise
+  });
+
+  let isScrolling = false;
+  const sections = document.querySelectorAll('section');
+
+  let currentIndex = 0;
+
+  function scrollToSection(index) {
+    if (index >= 0 && index < sections.length) {
+      isScrolling = true;
+      sections[index].scrollIntoView({ behavior: 'smooth' });
+
+      // Empêche les scrolls multiples trop rapides
+      setTimeout(() => {
+        isScrolling = true;
+        currentIndex = index;
+      }, 200); // durée approximative du scroll (ajuste si besoin)
+    }
+  }
+
+  window.addEventListener('wheel', (event) => {
+    if (isScrolling) return;
+
+    const direction = Math.sign(event.deltaY);
+
+    if (direction > 0 && currentIndex < sections.length - 1) {
+      scrollToSection(currentIndex + 1);
+    } else if (direction < 0 && currentIndex > 0) {
+      scrollToSection(currentIndex - 1);
+    }
+  });
+
+  // Pour réinitialiser l'index si on recharge au milieu de la page
+  window.addEventListener('DOMContentLoaded', () => {
+    const scrollPos = window.scrollY;
+    sections.forEach((section, index) => {
+      if (scrollPos >= section.offsetTop - window.innerHeight / 2) {
+        currentIndex = index;
+      }
+    });
+  });
+</script>

@@ -1,0 +1,334 @@
+---
+import Meta from "../components/Meta.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+
+import "../styles/global.css";
+
+import fr from "../i18n/fr.json";
+import en from "../i18n/en.json";
+import md from "../i18n/md.json";
+
+const availableLangs = { fr, en, md };
+const urlLang = Astro.url.searchParams.get("lang") || null;
+let storedLang = null;
+if (typeof window !== "undefined") {
+  storedLang = localStorage.getItem("lang") || null;
+}
+
+let lang = urlLang || storedLang || "fr";
+
+if (!availableLangs[lang]) {
+  lang = "fr";
+}
+
+const translations = availableLangs[lang];
+
+const defaultSubject = Astro.url.searchParams.get("subject") || "";
+---
+<!DOCTYPE html>
+<html lang={lang}>
+  <Meta title={translations.meta.contact.title} 
+        description={translations.meta.contact.description} 
+        lang={lang} />
+  <body>
+<Navigation lang={lang} translations={translations} />
+<section class="contact-section">
+  <div class="container">
+    <div class="right">
+      <form id="contact-form" class="contact-form">
+        <h3>{translations.contact.form.title}</h3>
+        <p class="email-nom">
+          <input
+            type="text"
+            name="name"
+            required
+            placeholder={translations.contact.form.placeholder.name}
+          />
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder={translations.contact.form.placeholder.email}
+          />
+        </p>
+
+        <select name="subject" required>
+          <option value="">{translations.contact.form.subject.label}</option>
+          <option
+            value="Demander un devis"
+            selected={defaultSubject === "Demander un devis"}
+          >
+            {translations.contact.form.subject.quote}
+          </option>
+          <option
+            value="Prendre rendez-vous"
+            selected={defaultSubject === "Prendre rendez-vous"}
+          >
+            {translations.contact.form.subject.appointment}
+          </option>
+          <option value="Autre"
+            >{translations.contact.form.subject.other}</option
+          >
+        </select>
+
+        <textarea
+          name="message"
+          rows="5"
+          required
+          placeholder={translations.contact.form.placeholder.message}
+        ></textarea>
+
+        <button type="submit" class="cta-button"
+          >{translations.contact.form.submit}</button
+        >
+      </form>
+    </div>
+
+    <div class="left">
+      <h2>{translations.contact.title}</h2>
+      <p>
+        📧 {translations.contact.email} : <a
+          href="mailto:qualitemaxime@gmail.com">qualitemaxime@gmail.com</a>
+      </p>
+      <p>
+        📞 {translations.contact.phone} : <a href="tel:+33123456789"
+          >01 23 45 67 89</a>
+      </p>
+    </div>
+  </div>
+  <div id="form-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <p id="modal-message"></p>
+    </div>
+  </div>
+</section>
+
+<Footer lang={lang} translations={translations} />
+<style>
+  .contact-section {
+    padding: 20px;
+    position: relative;
+    background-color: #f3f3f3;
+  }
+  .contact-section h3 {
+    padding: 0;
+    margin: 0;
+  }
+
+  .contact-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: #e5e5e5;
+    padding: 35px;
+    border-radius: 20px;
+  }
+
+  label {
+    font-size: 1.1rem;
+    display: block;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #fff;
+    color: #333;
+    display: block;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  textarea, textarea::placeholder {
+    font-family: 'Merge One', sans-serif;
+  }
+
+  .email-nom {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    margin: 0 2rem;
+    width: 100%;
+  }
+
+  .email-nom input {
+    width: 45% !important;
+  }
+
+  select {
+    width: 99%;
+  }
+  .cta-button {
+    padding: 10px 25px;
+    background-color: #ad7c00;
+    color: white;
+    outline: 3px solid rgba(255, 255, 255, 0.3);
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin: auto 0 !important;
+    margin-top: 15px;
+    text-decoration: none;
+    transition: all ease-in 300ms;
+    width: 50%;
+  }
+
+  .cta-button:hover {
+    background-color: #d49e16;
+  }
+
+  div.right {
+    width: 55%;
+  }
+
+  div.left {
+    width: 40%;
+    margin-top: 4rem;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal.hidden {
+    display: none;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+
+  .modal-content p {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ad7c00;
+    cursor: pointer;
+  }
+
+  .modal-close:hover {
+    color: #d49e16;
+  }
+</style>
+<div id="modal-data" data-translations={JSON.stringify(translations.modal)}></div>
+
+
+
+<script defer>
+  function showModal(message) {
+    const modal = document.getElementById("form-modal");
+    const messageElement = document.getElementById("modal-message");
+    const closeButton = document.querySelector(".modal-close");
+
+    if (!modal || !messageElement || !closeButton) return;
+
+    messageElement.textContent = message;
+    modal.classList.remove("hidden");
+
+    closeButton.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    setTimeout(() => {
+      modal.classList.add("hidden");
+    }, 5000);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contact-form");
+    if (!form) return;
+
+    const modalData = document.getElementById("modal-data");
+    let modalTranslations = {};
+
+    try {
+      if (modalData) {
+        modalTranslations = JSON.parse(modalData.dataset.translations);
+      }
+    } catch (e) {
+      console.warn("⚠️ Erreur de parsing des traductions modales :", e);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("/api/send-contact", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showModal(modalTranslations.success);
+          form.reset();
+        } else {
+          showModal(modalTranslations.error);
+        }
+      } catch (err) {
+        console.error("Erreur réseau :", err);
+        showModal(modalTranslations.technical);
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>

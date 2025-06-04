@@ -1,0 +1,139 @@
+---
+import Meta from '../components/Meta.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+// Importation statique des traductions
+import fr from '../i18n/fr.json';
+import en from '../i18n/en.json';
+import md from '../i18n/md.json';
+
+import '../styles/global.css';
+
+// Liste des langues disponibles
+const availableLangs = { fr, en, md };
+
+// Déterminer la langue depuis l'URL **avant le rendu**
+const urlLang = Astro.url.searchParams.get('lang') || null;
+let storedLang = null;
+
+// On récupère la langue stockée en client, mais Astro étant SSR, il faut s'assurer que ça ne plante pas
+if (typeof window !== "undefined") {
+  storedLang = localStorage.getItem("lang") || null;
+}
+
+// Choix final de la langue (URL > LocalStorage > FR par défaut)
+let lang = urlLang || storedLang || 'fr';
+
+// Vérifier si la langue existe, sinon utiliser 'fr'
+if (!availableLangs[lang]) {
+  lang = 'fr';
+}
+
+// Définir la traduction correcte
+const translations = availableLangs[lang];
+
+const BASE_URL = new URL(Astro.request.url).origin;
+
+const instagramPosts = await fetch(`${BASE_URL}/api/instagram`).then(res => res.json());
+console.log(instagramPosts);
+const tiktokPosts = null;
+
+---
+<Meta lang={lang} />
+<Navigation lang={lang} translations={translations} />
+
+<section class="socials-section">
+  <div class="container">
+    <h2>Nos derniers posts sur les réseaux</h2>
+
+    <div class="social-group">
+      <h3>📸 Instagram</h3>
+      <div class="social-posts">
+        {instagramPosts.length > 0 ? (
+          instagramPosts.map(post => (
+            <div class="post-card">
+              <a href={post.url} target="_blank">
+                <img src={post.image} alt="Post Instagram" />
+                <p>{post.caption || "Voir sur Instagram"}</p>
+              </a>
+            </div>
+          ))
+        ) : (
+          <p>Aucun post disponible.</p>
+        )}
+      </div>
+    </div>
+
+    <!-- <div class="social-group">
+      <h3>🎵 TikTok</h3>
+      <div class="social-posts">
+        {tiktokPosts.length > 0 ? (
+          tiktokPosts.map(post => (
+            <div class="post-card">
+              <a href={post.url} target="_blank">
+                <img src={post.image} alt="Vidéo TikTok" />
+                <p>Voir la vidéo</p>
+              </a>
+            </div>
+          ))
+        ) : (
+          <p>Aucune vidéo disponible.</p>
+        )}
+      </div>
+    </div> -->
+
+  </div>
+</section>
+<Footer lang={lang} translations={translations} />
+<style>
+  .socials-section {
+    padding: 50px 0;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .social-group {
+    margin-bottom: 30px;
+  }
+
+  .social-group h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .social-posts {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .post-card {
+    width: 250px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .post-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .post-card p {
+    padding: 10px;
+    font-size: 1rem;
+  }
+</style>

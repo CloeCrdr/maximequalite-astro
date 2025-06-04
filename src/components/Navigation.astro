@@ -1,0 +1,65 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+const { lang, translations } = Astro.props;
+---
+
+<nav class="nav">
+  <ul>
+    <li><a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>{translations.navigation.homepage}</a></li>
+    <li><a href="/socials">{translations.navigation.homepage}</a></li>
+    <li><a href="/about">{translations.navigation.aboutus}</a></li>
+    <li><a href="/contact">{translations.navigation.contact}</a></li>
+  </ul>
+
+  <LanguageSwitcher lang={lang} />
+</nav>
+<script client:load>
+  const url = new URL(window.location);
+  const langFromUrl = url.searchParams.get("lang");
+
+  if (langFromUrl) {
+    localStorage.setItem("lang", langFromUrl);
+  } else {
+    const stored = localStorage.getItem("lang") || "fr";
+    url.searchParams.set("lang", stored);
+    window.location.replace(url);
+  }
+</script>
+
+
+<style>
+  .nav {
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0px;
+    z-index: 9999;
+  }
+
+  .nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav li {
+    margin: 0 15px;
+  }
+
+  .nav a {
+    color: #c7a264;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .nav a:hover {
+    color: #f0b840;
+  }
+</style>

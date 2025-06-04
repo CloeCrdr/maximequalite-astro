@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "home": {
+      "title": "Maxime Qualité",
+      "description": "Welcome to our official website."
+    },
+    "about": {
+      "title": "About us",
+      "description": "Discover our story and values."
+    },
+    "contact": {
+      "title": "Contact us",
+      "description": "Contact us."
+    }
+  },
+  "navigation": {
+    "homepage": "Home",
+    "aboutus": "About us",
+    "about": "About",
+    "socials": "Social media",
+    "contact": "Contact"
+  },
+  "hero": {
+    "slogan": "Construction and renovation services",
+    "cta": "Request a quote"
+  },
+  "about": {
+    "title": "About us",
+    "shortDescription": "We are a company specialized in...",
+    "readMore": "Read more",
+    "fullDescription": "Detailed text about the company's history and values..."
+  },
+  "home": {
+    "welcome": "Welcome"
+  },
+  "entreprise": {
+    "title": "Maxime Qualité",
+    "description": "Transform your space with precision and care with MAXIME QUALITÉ! We are your trusted renovation partner, offering high-quality services to protect and enhance your home. With a team of dedicated professionals, we guarantee outstanding results and customer satisfaction. Choose MAXIME QUALITÉ for a successful renovation!"
+  },
+  "services": {
+    "title": "Our Services",
+    "list": [
+      {
+        "icon": "🏠",
+        "name": "Renovation"
+      },
+      {
+        "icon": "🛠️",
+        "name": "Masonry"
+      },
+      {
+        "icon": "🎨",
+        "name": "Painting"
+      },
+      {
+        "icon": "🌳",
+        "name": "Flooring"
+      },
+      {
+        "icon": "🛁",
+        "name": "Bathroom"
+      },
+      {
+        "icon": "⚡",
+        "name": "Electricity"
+      },
+      {
+        "icon": "🔧",
+        "name": "Plumbing"
+      }
+    ]
+  },
+  "partenaires": {
+    "title": "Our partners"
+  },
+  "review": {
+    "title": "Our customer reviews",
+    "see_more": "See more",
+    "see_less": "See less"
+  },
+  "newsletter": {
+    "titre": "Newsletter",
+    "description": "Want to stay up-to-date with all the news from Maxime Qualité? Sign up for our newsletter or join us on {facebook}, {tiktok}, and {instagram}!",
+    "facebook": "<a href='https://www.facebook.com/profile.php?id=100089175712114' target='_blank'>Facebook</a>",
+    "tiktok": "<a href='https://www.tiktok.com/@maxime.qualit' target='_blank'>TikTok</a>",
+    "instagram": "<a href='https://www.instagram.com/maximequalite/' target='_blank'>Instagram</a>",
+    "placeholder": "Your email address",
+    "submit": "Subscribe to the newsletter"
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "form": {
+      "title": "Contact form",
+      "placeholder": {
+        "name": "Your name",
+        "email": "Your email",
+        "message": "Write your message"
+      },
+      "subject": {
+        "label": "-- Choose a subject --",
+        "quote": "Request a quote",
+        "appointment": "Make an appointment",
+        "other": "Other"
+      },
+      "submit": "Send"
+    }
+  },
+  "aboutus": {
+    "title": "About us",
+    "description": "Maxime Qualité is a construction and renovation company based in Garches. We guarantee high-quality work and services tailored to your needs.",
+    "location": "📍 <strong>{address}</strong>",
+    "pro_card_title": "🪪 Professional license",
+    "infos": {
+      "siret": "📜 SIRET: 915 407 324 00010",
+      "insurance": "🏗️ Ten-year guarantee included",
+      "approval": "✅ Approved by the Ministry of Construction"
+    },
+    "get_direction": "Get directions"
+  },
+  "modal": {
+    "success": "✅ Your message has been successfully sent!",
+    "error": "❌ An error occurred. Please try again.",
+    "technical": "❌ A technical error has occurred."
+  }  
+}

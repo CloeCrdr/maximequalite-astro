@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "home": {
+      "title": "Maxime Qualité",
+      "description": "Bine ați venit pe site-ul nostru oficial."
+    },
+    "about": {
+      "title": "Despre noi",
+      "description": "Descoperiți povestea și valorile noastre."
+    },
+    "contact": {
+      "title": "Contactaţi-ne",
+      "description": "Contactaţi-ne."
+    }
+  },
+  "navigation": {
+    "homepage": "Acasă",
+    "aboutus": "Despre noi",
+    "about": "Despre",
+    "socials": "Rețele sociale",
+    "contact": "Contact"
+  },
+  "hero": {
+    "slogan": "Lucrări de construcții",
+    "cta": "Solicită o ofertă"
+  },
+  "about": {
+    "title": "Despre noi",
+    "shortDescription": "Suntem o companie specializată în...",
+    "readMore": "Află mai multe",
+    "fullDescription": "Text detaliat despre istoria și valorile companiei..."
+  },
+  "home": {
+    "welcome": "Bine ați venit"
+  },
+  "entreprise": {
+    "title": "Maxime Qualité",
+    "description": "Transformați-vă spațiul cu precizie și grijă cu MAXIME CALITATE! Suntem partenerul dvs. de încredere în renovare, oferind servicii de înaltă calitate pentru protecția și îmbunătățirea casei dvs. Cu o echipă de profesioniști dedicați, garantăm rezultate excepționale și satisfacția clienților. Alegeți MAXIME CALITATE pentru o renovare de succes!"
+  },
+  "services": {
+    "title": "Serviciile Noastre",
+    "list": [
+      { "icon": "🏠", "name": "Renovare" },
+      { "icon": "🛠️", "name": "Zidărie" },
+      { "icon": "🎨", "name": "Pictură" },
+      { "icon": "🌳", "name": "Parchet" },
+      { "icon": "🛁", "name": "Baie" },
+      { "icon": "⚡", "name": "Electricitate" },
+      { "icon": "🔧", "name": "Instalații sanitare" }
+    ]
+  },
+  "partenaires": {
+    "title": "Partenerii noștri"
+  },
+  "review": {
+    "title": "Recenziile clienților noștri",
+    "see_more": "Vezi mai mult",
+    "see_less": "Vezi mai puțin"
+  },
+  "newsletter": {
+    "titre": "Buletin informativ",
+    "description": "Vrei să fii la curent cu toate noutățile de la Maxime Qualité? Atunci abonează-te la newsletter-ul nostru sau alătură-te rețelelor noastre {facebook}, {tiktok} și {instagram}!",
+    "facebook": "<a href='https://www.facebook.com/profile.php?id=100089175712114' target='_blank'>Facebook</a>",
+    "tiktok": "<a href='https://www.tiktok.com/@maxime.qualit' target='_blank'>TikTok</a>",
+    "instagram": "<a href='https://www.instagram.com/maximequalite/' target='_blank'>Instagram</a>",
+    "placeholder": "Adresa ta de e-mail",
+    "submit": "Abonează-te la newsletter"
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "form": {
+      "title": "Formular de contact",
+      "placeholder": {
+        "name": "Numele tău",
+        "email": "E-mailul tău",
+        "message": "Scrie mesajul tău"
+      },
+      "subject": {
+        "label": "-- Alege un subiect --",
+        "quote": "Solicită o ofertă",
+        "appointment": "Programează o întâlnire",
+        "other": "Altceva"
+      },
+      "submit": "Trimite"
+    }
+  },
+  "aboutus": {
+    "title": "Despre noi",
+    "description": "Maxime Qualité este o companie specializată în construcții și renovări, situată în Garches. Garantăm lucrări de înaltă calitate și servicii adaptate nevoilor dumneavoastră.",
+    "location": "📍 <strong>{address}</strong>",
+    "pro_card_title": "🪪 Legitimație profesională",
+    "infos": {
+      "siret": "📜 SIRET : 915 407 324 00010",
+      "insurance": "🏗️ Asigurare decenală inclusă",
+      "approval": "✅ Acreditat de Ministerul Construcțiilor"
+    },
+    "get_direction": "Obține indicații"
+  },
+  "modal": {
+    "success": "✅ Mesajul dumneavoastră a fost trimis cu succes!",
+    "error": "❌ A apărut o eroare. Vă rugăm să încercați din nou.",
+    "technical": "❌ A apărut o eroare tehnică."
+  }  
+}
