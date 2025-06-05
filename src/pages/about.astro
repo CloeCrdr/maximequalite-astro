@@ -32,7 +32,7 @@ if (!availableLangs[lang]) {
 // Définir la traduction correcte
 const translations = availableLangs[lang];
 
-const API_KEY = import.meta.env.GOOGLE_MAPS_API_KEY;
+const API_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
 const COMPANY_LAT = 48.840923; // Remplace par la latitude de l'entreprise
 const COMPANY_LNG = 2.172104; // Remplace par la longitude
 const COMPANY_ADDRESS = "1 Allée des Genêts, 92380 Garches"; // Adresse exacte
@@ -63,7 +63,7 @@ const COMPANY_ADDRESS = "1 Allée des Genêts, 92380 Garches"; // Adresse exacte
       </ul>
     </div>
     <div class="left">
-      <div id="map" data-api-key={import.meta.env.GOOGLE_MAPS_API_KEY}></div>
+      <div id="map" data-api-key={import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}></div>
 
       <a
         href={`https://www.google.com/maps/dir/?api=1&destination=${COMPANY_LAT},${COMPANY_LNG}`}

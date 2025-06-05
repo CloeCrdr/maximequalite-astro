@@ -1,7 +1,7 @@
 ---
 const { translations } = Astro.props;
 const API_KEY = import.meta.env.GOOGLE_API_KEY;
-const PLACE_ID = import.meta.env.PLACE_ID;
+const PLACE_ID = import.meta.env.PUBLIC_PLACE_ID;
 
 // Récupère la langue actuelle depuis Astro
 const lang = Astro.url.searchParams.get("lang") || "fr";
