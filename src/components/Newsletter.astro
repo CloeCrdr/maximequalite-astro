@@ -106,123 +106,127 @@ modalClose.addEventListener("click", () => {
 
 <style>
   .newsletter-section {
-    background-color: #f3f3f3;
-    padding: 50px 0;
-  }
+  background-color: #f3f3f3;
+  padding: 50px 0;
+}
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
-    text-align: center;
-  }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
 
-  h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-  p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-  }
+p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
 
-  .newsletter-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    background: #e5e5e5;
-    padding: 10px;
-    border-radius: 5px;
-  }
+.newsletter-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  background: #e5e5e5;
+  padding: 10px;
+  border-radius: 5px;
+  flex-wrap: wrap;
+}
 
-  .newsletter-form input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background: none;
-    font-size: 1rem;
-  }
+.newsletter-form input {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px;
+  border: none;
+  background: none;
+  font-size: 1rem;
+}
 
-  .newsletter-form button {
-    background-color: #a07a29;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 180px;
-    position: relative;
-  }
+.newsletter-form button {
+  background-color: #a07a29;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  position: relative;
+}
 
-  .newsletter-form button:hover {
-    background-color: #8d6a20;
-  }
+.newsletter-form button:hover {
+  background-color: #8d6a20;
+}
 
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
-  .modal.hidden {
-    display: none;
-  }
+.modal.hidden {
+  display: none;
+}
 
-  .modal-content {
-    background-color: white;
-    padding: 20px 30px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative;
-    max-width: 90%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-out;
-  }
+.modal-content {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
 
-  .modal-content p {
-    font-size: 1.1rem;
-    margin: 0;
-  }
+.modal-content p {
+  font-size: 1.1rem;
+  margin: 0;
+}
 
-  .close {
-    position: absolute;
-    top: 8px;
-    right: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-  }
+.close {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  .btn-text {
+.btn-text {
   transition: opacity 0.3s ease;
 }
-  .loader {
+
+.loader {
   border: 3px solid #f3f3f3;
   border-top: 3px solid #a07a29;
   border-radius: 50%;
@@ -239,6 +243,28 @@ modalClose.addEventListener("click", () => {
 
 .hidden {
   display: none !important;
+}
+
+/* ✅ Responsive ajustements */
+@media (max-width: 600px) {
+  .newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
 }
 
 </style>
