@@ -157,6 +157,47 @@ const COMPANY_ADDRESS = "1 Allée des Genêts, 92380 Garches"; // Adresse exacte
   p strong {
     font-size: 1rem;
   }
+
+  @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  div.right, .left {
+    width: 100%;
+    padding: 0;
+  }
+
+  div.right {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center !important;
+  }
+
+  #map {
+    width: 100%;
+    height: 300px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  ul {
+    font-size: 0.95rem;
+  }
+
+  p.description {
+    font-size: 0.9rem !important;
+  }
+}
+
 </style>
 
 <script client:load>

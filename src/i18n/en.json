@@ -11,6 +11,10 @@
     "contact": {
       "title": "Contact us",
       "description": "Contact us."
+    }, 
+    "socials": {
+      "title" : "Social Media",
+      "description" : "Follow us online"
     }
   },
   "navigation": {
@@ -119,6 +123,12 @@
     },
     "get_direction": "Get directions"
   },
+  "socials": {
+    "title": "Social Media",
+    "description": "Find us on social media for more posts!",
+    "posts_title": "Our latest posts",
+    "see_post": "View on Facebook"
+  },  
   "modal": {
     "success": "✅ Your message has been successfully sent!",
     "error": "❌ An error occurred. Please try again.",

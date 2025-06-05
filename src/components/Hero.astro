@@ -35,6 +35,7 @@ const { lang, translations } = Astro.props;
   }
   .overlay {
     position: absolute;
+    z-index: 2;
     top: 40%; 
     left: 50%;
     transform: translateY(-50%);
@@ -43,6 +44,12 @@ const { lang, translations } = Astro.props;
   }
   .presentation {
     color: #ecececbd;
+  }
+  .presentation h1 {
+    font-size: clamp(2rem, 6vw, 4rem);
+  }
+  .presentation p {
+    font-size: clamp(1rem, 3vw, 1.6rem);
   }
   .cta-button {
     padding: 20px 35px;
@@ -64,4 +71,26 @@ const { lang, translations } = Astro.props;
     color: #d49e16;
 
   }
+
+  @media (max-width: 768px) {
+  .hero {
+    height: 70vh;
+    padding: 4rem 1rem;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .cta-button {
+    font-size: 1rem;
+    padding: 15px 25px;
+  }
+
+  .overlay {
+    position: static;
+    top: inherit;
+    left: inherit;
+    transform: inherit;
+  }
+}
 </style>

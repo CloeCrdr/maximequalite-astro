@@ -1,23 +1,27 @@
 ---
+// Props
 import LanguageSwitcher from './LanguageSwitcher.astro';
-
 const { lang, translations } = Astro.props;
 ---
 
 <nav class="nav">
-  <ul>
+  <div class="nav-topbar">
+    <button class="burger" aria-label="Menu" onclick="toggleNav()">☰</button>
+    <LanguageSwitcher lang={lang} />
+  </div>
+
+  <ul class="nav-menu" id="navMenu">
     <li><a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>{translations.navigation.homepage}</a></li>
-    <li><a href="/socials">{translations.navigation.homepage}</a></li>
+    <li><a href="/socials">{translations.navigation.socials}</a></li>
     <li><a href="/about">{translations.navigation.aboutus}</a></li>
     <li><a href="/contact">{translations.navigation.contact}</a></li>
   </ul>
-
-  <LanguageSwitcher lang={lang} />
 </nav>
+
 <script client:load>
+  // Langage par URL
   const url = new URL(window.location);
   const langFromUrl = url.searchParams.get("lang");
-
   if (langFromUrl) {
     localStorage.setItem("lang", langFromUrl);
   } else {
@@ -25,41 +29,95 @@ const { lang, translations } = Astro.props;
     url.searchParams.set("lang", stored);
     window.location.replace(url);
   }
+
+  // Menu mobile toggle
+  window.toggleNav = function () {
+  const nav = document.getElementById("navMenu");
+  nav.classList.toggle("open");
+};
+
 </script>
 
-
 <style>
-  .nav {
+/* nav principal */
+.nav {
+  background-color: #1a1a1a;
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  display: flex; 
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+
+/* haut du nav : burger + switcher */
+.nav-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* le menu UL */
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* liens */
+.nav a {
+  color: #c7a264;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.nav a:hover {
+  color: #f0b840;
+}
+
+/* burger */
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #c7a264;
+  cursor: pointer;
+}
+
+/* ======================= MOBILE ====================== */
+@media (max-width: 768px) {
+
+  .nav {display: block; }
+  .burger {
+    display: block;
+  }
+
+  /* menu devient overlay */
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* juste sous le topbar */
+    left: 0;
+    width: 100%;
     background-color: #1a1a1a;
+    padding: 1rem 2rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    z-index: 9998;
+  }
+
+  .nav-menu.open {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    position: sticky;
-    top: 0px;
-    z-index: 9999;
   }
 
-  .nav ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .nav-menu li {
+    margin: 10px 0;
   }
+}
 
-  .nav li {
-    margin: 0 15px;
-  }
-
-  .nav a {
-    color: #c7a264;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-
-  .nav a:hover {
-    color: #f0b840;
-  }
 </style>

@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   .testimonial-carousel {
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     position: relative;
     width: 100%;
@@ -231,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
     position: relative;
     width: 100%;
     max-width: 600px;
-    min-width: 500px;
   }
 
   .testimonial-card {
@@ -315,4 +314,83 @@ document.addEventListener("DOMContentLoaded", () => {
   .name_stars {
     padding-left: 2rem;
   }
+
+  @media (max-width: 768px) {
+  .container {
+    width: 80%;
+    padding: 0 1rem;
+  }
+
+  .testimonial-wrapper {
+    max-width: 80%;
+    min-width: auto;
+  }
+
+  .testimonial-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+
+  .username {
+    font-size: 1rem;
+  }
+
+  .testimonial-text {
+    font-size: 0.85rem;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .top-avis {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .name_stars {
+    padding-left: 0;
+  }
+
+  .prev-btn,
+  .next-btn {
+    font-size: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .prev-btn {
+    left: -5px;
+  }
+
+  .next-btn {
+    right: -5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial-text {
+    font-size: 0.8rem;
+  }
+
+  .stars {
+    font-size: 0.6rem;
+    letter-spacing: 0.15rem;
+  }
+
+  .toggle-text {
+    font-size: 0.75rem;
+  }
+
+  .prev-btn,
+  .next-btn {
+    font-size: 1.3rem;
+  }
+}
+
 </style>

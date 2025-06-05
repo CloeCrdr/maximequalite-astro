@@ -1,20 +1,21 @@
 ---
-import Meta from '../components/Meta.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
+import Meta from "../components/Meta.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import { fetchSheetData } from "../utils/fetchSheet.js";
 
 // Importation statique des traductions
-import fr from '../i18n/fr.json';
-import en from '../i18n/en.json';
-import md from '../i18n/md.json';
+import fr from "../i18n/fr.json";
+import en from "../i18n/en.json";
+import md from "../i18n/md.json";
 
-import '../styles/global.css';
+import "../styles/global.css";
 
 // Liste des langues disponibles
 const availableLangs = { fr, en, md };
 
 // Déterminer la langue depuis l'URL **avant le rendu**
-const urlLang = Astro.url.searchParams.get('lang') || null;
+const urlLang = Astro.url.searchParams.get("lang") || null;
 let storedLang = null;
 
 // On récupère la langue stockée en client, mais Astro étant SSR, il faut s'assurer que ça ne plante pas
@@ -23,11 +24,11 @@ if (typeof window !== "undefined") {
 }
 
 // Choix final de la langue (URL > LocalStorage > FR par défaut)
-let lang = urlLang || storedLang || 'fr';
+let lang = urlLang || storedLang || "fr";
 
 // Vérifier si la langue existe, sinon utiliser 'fr'
 if (!availableLangs[lang]) {
-  lang = 'fr';
+  lang = "fr";
 }
 
 // Définir la traduction correcte
@@ -35,54 +36,54 @@ const translations = availableLangs[lang];
 
 const BASE_URL = new URL(Astro.request.url).origin;
 
-const instagramPosts = await fetch(`${BASE_URL}/api/instagram`).then(res => res.json());
-console.log(instagramPosts);
-const tiktokPosts = null;
-
+const entries = await fetchSheetData();
 ---
-<Meta lang={lang} />
+
+<Meta title={translations.meta.socials.title} 
+description={translations.meta.socials.description} 
+lang={lang} />
 <Navigation lang={lang} translations={translations} />
 
 <section class="socials-section">
   <div class="container">
-    <h2>Nos derniers posts sur les réseaux</h2>
+    <h2>{translations.socials.title}</h2>
+    <p>{translations.socials.description}</p>
+    <div class="icons-socials">
+      <a href="https://www.facebook.com/profile.php?id=100089175712114"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://www.instagram.com/maximequalite/"><i class="fa-brands fa-square-instagram"></i></a>
+      <a href="https://www.tiktok.com/@maxime.qualit"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.linkedin.com/in/maxime-qualit%C3%A9-576712262/?originalSubdomain=fr"><i class="fa-brands fa-linkedin"></i></a>
+    </div>
+    <h4>{translations.socials.posts_title}</h4>
 
     <div class="social-group">
-      <h3>📸 Instagram</h3>
-      <div class="social-posts">
-        {instagramPosts.length > 0 ? (
-          instagramPosts.map(post => (
-            <div class="post-card">
-              <a href={post.url} target="_blank">
-                <img src={post.image} alt="Post Instagram" />
-                <p>{post.caption || "Voir sur Instagram"}</p>
-              </a>
+      <div class="entry-grid">
+        {
+          entries.map((entry) => (
+            <div class="entry">
+              <div class="image-row">
+                {entry.images.map((url, i) => (
+                  <img src={url} alt={`Image ${i + 1}`} loading="lazy" />
+                ))}
+              </div>
+              {entry.text !== "" && (
+                <p class="entry-text" set:html={entry.text} />
+              )}
+              {entry.url_social.map((url, i) => (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-post"
+                >
+                {translations.socials.see_post} {entry.url_social.length > 1 ? i + 1 : ""}
+                </a>
+              ))}
             </div>
           ))
-        ) : (
-          <p>Aucun post disponible.</p>
-        )}
+        }
       </div>
     </div>
-
-    <!-- <div class="social-group">
-      <h3>🎵 TikTok</h3>
-      <div class="social-posts">
-        {tiktokPosts.length > 0 ? (
-          tiktokPosts.map(post => (
-            <div class="post-card">
-              <a href={post.url} target="_blank">
-                <img src={post.image} alt="Vidéo TikTok" />
-                <p>Voir la vidéo</p>
-              </a>
-            </div>
-          ))
-        ) : (
-          <p>Aucune vidéo disponible.</p>
-        )}
-      </div>
-    </div> -->
-
   </div>
 </section>
 <Footer lang={lang} translations={translations} />
@@ -94,7 +95,7 @@ const tiktokPosts = null;
   }
 
   .container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
   }
@@ -102,6 +103,18 @@ const tiktokPosts = null;
   h2 {
     font-size: 2rem;
     margin-bottom: 20px;
+    margin: 0 auto;
+    width: inherit !important;
+  }
+
+  .entry {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    break-inside: avoid;
+    padding: 10px;
   }
 
   .social-group {
@@ -120,7 +133,7 @@ const tiktokPosts = null;
   }
 
   .post-card {
-    width: 250px;
+    width: 200px;
     border-radius: 8px;
     overflow: hidden;
     background: white;
@@ -135,5 +148,133 @@ const tiktokPosts = null;
   .post-card p {
     padding: 10px;
     font-size: 1rem;
+  }
+
+  .image-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .image-row img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    margin-top: 20px;
+  }
+
+  .entry-title {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    color: #000;
+  }
+
+  .entry-text {
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+    color: #444;
+    text-align: justify;
+    text-wrap: wrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* nombre estimé de lignes */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 250px;
+    padding: 5px;
+  }
+  .entry-grid {
+    column-count: 3;
+    column-gap: 2rem;
+  }
+
+  .btn-post {
+    text-decoration: none;
+    color: white;
+    background-color: #a07a29;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.7rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top: 1rem;
+    display: block;
+    max-width: 150px;
+    text-transform: uppercase;
+    transition: background 0.3s;
+  }
+
+  .btn-post:hover {
+    background-color: #8d6a20;
+  }
+
+  .icons-socials i {
+    display: inline-block;
+    font-size: 2rem;
+    margin: 10px;
+    transition: background 0.3s;
+  }
+
+  .icons-socials i:hover {
+    color: #a87f27;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
+  @media (max-width: 1024px) {
+    .entry-grid {
+      column-count: 2;
+    }
+
+    .container,
+    h2 {
+      width: 750px;
+      margin: 0 auto;
+    }
+  }
+  @media (max-width: 768px) {
+    .entry {
+      text-align: center;
+    }
+
+    .image-row {
+      justify-content: center;
+    }
+
+    .image-row img {
+      width: 100%;
+      height: inherit;
+    }
+
+    .entry-grid {
+      /*grid-template-columns: 1fr !important;*/
+      column-count: 1;
+      gap: 1rem;
+    }
+
+    .entry {
+      width: 90% !important;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+    }
+    .container {
+      width: 80%; 
+      margin: 0 auto;
+    }
+    h2 {
+      width: 250px !important;
+    }
+
+    .entry-text {
+      max-height: 100px;
+    }
+
+    .post-card {
+      width: 100px;
+    }
   }
 </style>

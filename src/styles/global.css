@@ -1,41 +1,44 @@
 @import url('https://fonts.cdnfonts.com/css/merge-one');
-@import url('https://fonts.cdnfonts.com/css/fredoka-one'); 
-html, body {
-    margin : 0;
-    padding: 0;
-    font-family: 'Merge One', sans-serif;
-    font-size: 1.2rem;
-    scroll-behavior: smooth;
-    height: 100%;
-    overflow-x: hidden;
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Merge One', sans-serif;
+  font-size: 1.2rem;
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 html {
-    scroll-behavior: smooth;
-  }
+  scroll-behavior: smooth;
+}
 
-  a {
-    color: #6a500f;
-  }
+a {
+  color: #6a500f;
+}
 
-  h1 {
-   font-size:  3rem !important;
-  }
+h1 {
+  font-size: 3rem !important;
+}
+
 h2 {
-    font-size: 2.5rem !important;
-    font-weight: bold;
-    margin-bottom: 15px;
-    font-family: Fredoka One;
-    width: 1000px;
-    margin: 0 auto;
+  font-size: 2.5rem !important;
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-family: Fredoka One;
+  width: 1000px;
+  margin: 0 auto;
 }
 
 section {
-    min-height: 90vh !important;
-    scroll-snap-align: start;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  min-height: 90vh !important;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .section-wrapper {
@@ -54,4 +57,15 @@ section {
 .section-wrapper.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-family: Fredoka One;
+    width: auto;
+    margin: 0 auto;
+  }
 }

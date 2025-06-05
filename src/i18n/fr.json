@@ -11,6 +11,10 @@
     "contact": {
       "title": "Nous contacter",
       "description": "Nous contacter."
+    }, 
+    "socials": {
+      "title" : "Réseaux sociaux",
+      "description" : "Suivez-nous en ligne"
     }
   },
   "navigation": {
@@ -119,9 +123,15 @@
     },
     "get_direction": "Obtenir un itinéraire"
   },
+  "socials": {
+    "title": "Réseaux sociaux",
+    "description": "Retrouvez-nous sur nos réseaux sociaux pour plus de posts !",
+    "posts_title": "Nos derniers posts",
+    "see_post": "Voir sur Facebook"
+  },  
   "modal": {
     "success": "✅ Votre message a bien été envoyé !",
     "error": "❌ Une erreur est survenue. Merci de réessayer.",
     "technical": "❌ Une erreur technique est survenue."
-  }  
+  }
 }

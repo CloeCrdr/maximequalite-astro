@@ -1,0 +1,86 @@
+---
+export interface Entry {
+  name: string;
+  category: string;
+  images: string[];
+}
+
+const { entries }: { entries: Entry[] } = Astro.props;
+
+const categories = [...new Set(entries.map(e => e.category))];
+let selected = categories[0];
+---
+
+<style>
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    background-color: #ddd;
+  }
+
+  .tab.active {
+    background-color: #ad7c00;
+    color: white;
+    font-weight: bold;
+  }
+
+  .entry {
+    margin-bottom: 2rem;
+  }
+
+  .entry-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .image-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .image-row img {
+    width: 100px;
+    border-radius: 0.5rem;
+  }
+</style>
+
+<script type="module">
+  const tabs = document.querySelectorAll('.tab');
+  const entries = document.querySelectorAll('.entry');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.category;
+      entries.forEach(e => {
+        e.style.display = e.dataset.category === cat ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+
+<div class="tabs">
+  {categories.map(cat => (
+    <div class="tab{cat === selected ? ' active' : ''}" data-category={cat}>{cat}</div>
+  ))}
+</div>
+
+{entries.map(entry => (
+  <div class="entry" data-category={entry.category} style={entry.category === selected ? '' : 'display: none;'}>
+    <div class="entry-title">{entry.name}</div>
+    <div class="image-row">
+      {entry.images.map(url => (
+        <img src={url} alt={entry.name} loading="lazy" />
+      ))}
+    </div>
+  </div>
+))}

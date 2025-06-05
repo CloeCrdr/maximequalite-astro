@@ -262,6 +262,50 @@ const defaultSubject = Astro.url.searchParams.get("subject") || "";
   .modal-close:hover {
     color: #d49e16;
   }
+
+  @media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 0px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .left, .right {
+    width: 80% !important;
+  }
+
+  div.left {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  .contact-form {
+    width: auto;
+    padding: 25px;
+  }
+
+  .email-nom {
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .email-nom input {
+    width: 90% !important;
+  }
+
+  select,
+  textarea {
+    width: 90%;
+  }
+
+  .cta-button {
+    width: 80%;
+  }
+}
+
 </style>
 <div id="modal-data" data-translations={JSON.stringify(translations.modal)}></div>
 

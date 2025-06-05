@@ -11,6 +11,10 @@
     "contact": {
       "title": "Contactaţi-ne",
       "description": "Contactaţi-ne."
+    }, 
+    "socials": {
+      "title" : "Rețele sociale",
+      "description" : "Urmărește-ne online"
     }
   },
   "navigation": {
@@ -98,6 +102,12 @@
     },
     "get_direction": "Obține indicații"
   },
+  "socials": {
+    "title": "Rețele sociale",
+    "description": "Găsiți-ne pe rețelele sociale pentru mai multe postări!",
+    "posts_title": "Cele mai recente postări",
+    "see_post": "Vezi pe Facebook"
+  },  
   "modal": {
     "success": "✅ Mesajul dumneavoastră a fost trimis cu succes!",
     "error": "❌ A apărut o eroare. Vă rugăm să încercați din nou.",
