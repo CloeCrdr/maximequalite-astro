@@ -2,6 +2,9 @@ import { Resend } from 'resend';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
+const TO_EMAIL = import.meta.env.TO_EMAIL; 
+const FROM_EMAIL = import.meta.env.FROM_EMAIL
+
 export async function POST({ request }) {
   try {
     const formData = await request.formData();
@@ -15,8 +18,8 @@ export async function POST({ request }) {
     }
 
     const emailResponse = await resend.emails.send({
-      from: 'Maxime Qualité <onboarding@resend.dev>', // ou une adresse Resend test
-      to: ['cloe.cordeiro@outlook.fr'],
+      from: FROM_EMAIL, // ou une adresse Resend test
+      to: [ TO_EMAIL ],
       subject: `[Formulaire de contact] ${subject}`,
       html: `
         <p><strong>Nom :</strong> ${name}</p>
