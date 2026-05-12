@@ -352,8 +352,11 @@ const defaultSubject = Astro.url.searchParams.get("subject") || "";
       const formData = new FormData(form);
 
       try {
-        const response = await fetch("/api/send-contact", {
+        const response = await fetch("https://formsubmit.co/ajax/qualitemaxime@gmail.com", {
           method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
           body: formData,
         });
 

@@ -2,7 +2,8 @@
 import Meta from "../components/Meta.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
-import { fetchSheetData } from "../utils/fetchSheet.js";
+
+import { getSocials } from "../lib/getSocials";
 
 // Importation statique des traductions
 import fr from "../i18n/fr.json";
@@ -36,12 +37,20 @@ const translations = availableLangs[lang];
 
 const BASE_URL = new URL(Astro.request.url).origin;
 
-const entries = await fetchSheetData();
+let entries = [];
+
+try {
+  entries = await getSocials();
+} catch (error) {
+  console.error("[Socials]", error);
+}
 ---
 
-<Meta title={translations.meta.socials.title} 
-description={translations.meta.socials.description} 
-lang={lang} />
+<Meta
+  title={translations.meta.socials.title}
+  description={translations.meta.socials.description}
+  lang={lang}
+/>
 <Navigation lang={lang} translations={translations} />
 
 <section class="socials-section">
@@ -49,10 +58,19 @@ lang={lang} />
     <h2>{translations.socials.title}</h2>
     <p>{translations.socials.description}</p>
     <div class="icons-socials">
-      <a href="https://www.facebook.com/profile.php?id=100089175712114"><i class="fa-brands fa-facebook"></i></a>
-      <a href="https://www.instagram.com/maximequalite/"><i class="fa-brands fa-square-instagram"></i></a>
-      <a href="https://www.tiktok.com/@maxime.qualit"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://www.linkedin.com/in/maxime-qualit%C3%A9-576712262/?originalSubdomain=fr"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=100089175712114"
+        ><i class="fa-brands fa-facebook"></i></a
+      >
+      <a href="https://www.instagram.com/maximequalite/"
+        ><i class="fa-brands fa-square-instagram"></i></a
+      >
+      <a href="https://www.tiktok.com/@maxime.qualit"
+        ><i class="fa-brands fa-tiktok"></i></a
+      >
+      <a
+        href="https://www.linkedin.com/in/maxime-qualit%C3%A9-576712262/?originalSubdomain=fr"
+        ><i class="fa-brands fa-linkedin"></i></a
+      >
     </div>
     <h4>{translations.socials.posts_title}</h4>
 
@@ -69,16 +87,16 @@ lang={lang} />
               {entry.text !== "" && (
                 <p class="entry-text" set:html={entry.text} />
               )}
-              {entry.url_social.map((url, i) => (
+              {entry.link && (
                 <a
-                  href={url}
+                  href={entry.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="btn-post"
                 >
-                {translations.socials.see_post} {entry.url_social.length > 1 ? i + 1 : ""}
+                  {translations.socials.see_post}
                 </a>
-              ))}
+              )}
             </div>
           ))
         }
@@ -262,7 +280,7 @@ lang={lang} />
       margin-bottom: 1rem;
     }
     .container {
-      width: 80%; 
+      width: 80%;
       margin: 0 auto;
     }
     h2 {

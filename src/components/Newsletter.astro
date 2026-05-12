@@ -1,7 +1,5 @@
 ---
 const { lang, translations } = Astro.props;
-const scriptURL =
-  "https://script.google.com/macros/s/AKfycbwPhrBIIcSj4jA4jqaHFm5alKIzUzu9ISJYw0RU9MBBoS_egtaXAA02M4DbOCSrhCkU/exec"; // Remplace par ton lien
 ---
 
 <section class="newsletter-section">
@@ -48,8 +46,6 @@ const submitButton = document.querySelector("#submit-button");
 const btnText = submitButton.querySelector(".btn-text");
 const loader = submitButton.querySelector(".loader");
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbwPhrBIIcSj4jA4jqaHFm5alKIzUzu9ISJYw0RU9MBBoS_egtaXAA02M4DbOCSrhCkU/exec";
-
 function toggleLoading(isLoading) {
   if (isLoading) {
     loader.classList.remove("hidden");
@@ -66,12 +62,15 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   toggleLoading(true);
 
-  const formData = new FormData(form);
+  const email =form.querySelector('input[name="email"]').value;
 
   try {
-    const response = await fetch(scriptURL, {
-      method: "POST",
-      body: formData,
+    const response = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
     });
 
     const result = await response.json();
