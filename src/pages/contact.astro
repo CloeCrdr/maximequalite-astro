@@ -56,18 +56,19 @@ const defaultSubject = Astro.url.searchParams.get("subject") || "";
         <select name="subject" required>
           <option value="">{translations.contact.form.subject.label}</option>
           <option
-            value="Demander un devis"
-            selected={defaultSubject === "Demander un devis"}
+            value={translations.contact.form.subject.quote}
+            selected={defaultSubject === translations.contact.form.subject.quote}
           >
             {translations.contact.form.subject.quote}
           </option>
           <option
-            value="Prendre rendez-vous"
-            selected={defaultSubject === "Prendre rendez-vous"}
+            value={translations.contact.form.subject.appointment}
+            selected={defaultSubject === translations.contact.form.subject.appointment}
           >
             {translations.contact.form.subject.appointment}
           </option>
-          <option value="Autre"
+          <option value={translations.contact.form.subject.other}
+            
             >{translations.contact.form.subject.other}</option
           >
         </select>

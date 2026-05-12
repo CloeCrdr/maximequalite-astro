@@ -6,7 +6,7 @@ const { lang, translations } = Astro.props;
   <div class="overlay">
     <div class="presentation"><h1>{translations.entreprise.title}</h1>
     <p>{translations.hero.slogan}</p></div>
-    <a class="cta-button" id="scrollButton" href={`/contact?lang=${lang}`}>{translations.hero.cta}</a>
+    <a class="cta-button" id="scrollButton" href={`/contact?lang=${lang}&subject=${encodeURIComponent(translations.contact.form.subject.quote)}`}>{translations.hero.cta}</a>
   </div>
 </div>
 
