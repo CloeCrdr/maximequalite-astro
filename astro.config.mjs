@@ -1,16 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import dotenv from "dotenv";
-import vercel from '@astrojs/vercel/serverless'; 
+import vercel from '@astrojs/vercel';
 
-dotenv.config()
-
-// https://astro.build/config
 export default defineConfig({
-    output: "server",
-    adapter: vercel(),
-    server: {
-        host: true,
-        port: 3000,
-    },
+  output: 'server',
+
+  adapter: vercel(),
+
+  server: {
+    host: true,
+    port: 3000,
+  },
 });
